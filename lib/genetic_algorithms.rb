@@ -5,6 +5,5 @@ module GeneticAlgorithms
   require 'genetic_algorithms/chromosome'
   require 'genetic_algorithms/exceptions'
   require 'genetic_algorithms/roulette_wheel'
+  require 'genetic_algorithms/population'
 end
-
-

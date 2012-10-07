@@ -11,10 +11,20 @@ module GeneticAlgorithms
       super(string)
     end
 
+    def self.random(length)
+      chromosome = (0...length).inject(String.new) do |chromosome, i|
+        chromosome += (rand(2) == 0 ? OFF : ON)
+      end
+
+      Chromosome.new chromosome
+    end
+
     def mutate(prob=0.01)
-      self.each_char.map do |char|
+      chromosome = self.each_char.map do |char|
         mutate?(prob) ? flip(char) : char
       end.join
+
+      Chromosome.new chromosome
     end
 
     def flip(char)
@@ -22,7 +32,6 @@ module GeneticAlgorithms
     end
     
     def crossover(chromosome, probability=0.7)
-
       unless self.size == chromosome.size
         raise IncompatibleChromosomes, "Both chromosomes need to be the same size"
       end
@@ -32,11 +41,10 @@ module GeneticAlgorithms
       if crossover?(probability)
         index   = rand(0...length)
 
-        first_offspring  = self[0...index] + chromosome[index...length]
-        second_offspring = chromosome[0...index] + self[index...length]
+        first_offspring  = Chromosome.new self[0...index] + chromosome[index...length]
+        second_offspring = Chromosome.new chromosome[0...index] + self[index...length]
       end
 
-      
       [first_offspring, second_offspring]
     end
     
