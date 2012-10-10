@@ -4,7 +4,7 @@ module GeneticAlgorithms
     OFF, ON = "0", "1"
 
     def initialize(string)
-      unless string.each_char.all? { |s| s == "0" or s == "1" }
+      unless string.each_char.all? { |s| s == OFF or s == ON }
         raise InvalidChromosome, "A chromosome can only have 0's and 1's" 
       end
 
