@@ -1,30 +1,23 @@
+require 'genetic_algorithms/natural_hash'
+
 module GeneticAlgorithms
-  class NaturalHash < Hash
-    def map
-      result = super()
-
-      if result.is_a? Array and result.all? { |i| i.is_a? Array and i.length == 2}
-        return NaturalHash[ result ]
-      end
-
-      result
-    end
-  end
-
   class RouletteWheel
 
-    #TODO: THis works, but it is SERIOULY ugly
-    def self.spin prob_dist
-      prng  = rand
-      total = prob_dist.values.inject(:+)
+    def self.spin chromosomes_and_scores
+      chromosomes_and_scores      = NaturalHash[ chromosomes_and_scores ]
+      total                       = chromosomes_and_scores.values.inject(:+)
+      prng                        = rand
 
-      normalized = prob_dist.map { |obj, prob| [obj, prob.to_f/total] }
-      normalized = Hash[ normalized ].sort_by { |obj, prob| prob }
+      normalized = chromosomes_and_scores.map do |chromosome, score| 
+        [chromosome, score.to_f/total]
+      end
 
-      accum = 0
-      Hash[ normalized ].each_pair do |obj, prob| 
-        return obj if prng <= prob + accum
-        accum += prob
+      normalized = normalized.sort_by { |chromosome, probability| probability }
+
+      accumulator = 0
+      normalized.each_pair do |chromosome, probability| 
+        return chromosome if prng <= probability + accumulator
+        accumulator += probability
       end
     end
   end
