@@ -14,7 +14,7 @@ module GeneticAlgorithms
       seed_population if options[:first_generation]
     end
 
-    def evolve!
+    def evolve
       weighted_chromosomes = @chromosomes.inject(Hash.new) do |memo, chrom|
         memo[chrom] = @fitness_function.call(chrom)
         memo
@@ -54,4 +54,4 @@ fitness_function = lambda do |chromosome|
 end
 
 p = GeneticAlgorithms::Population.new 6, fitness_function, first_generation: true
-ap p.evolve!
+ap p.evolve
