@@ -1,17 +1,19 @@
-require 'awesome_print'
-
 module GeneticAlgorithms
 
-  #TODO: add input validation and defensive coding
+  #TODO: add input validation
   class Population
 
     attr_reader :chromosomes
 
-    def initialize size, fitness_function, options={}
-      @chromosomes      = options[:chromosomes] || Array.new(size)
+    def initialize(chromosomes, fitness_function)
+      @chromosomes      = chromosomes
       @fitness_function = fitness_function
+    end
 
-      seed_population if options[:first_generation]
+    def self.random_chromosomes(total_chromosomes, chromosome_length)
+      Array.new(total_chromosomes).map do 
+        Chromosome.random(chromosome_length)
+      end
     end
 
     def evolve
@@ -30,18 +32,6 @@ module GeneticAlgorithms
       end
 
       Population.new @chromosomes.size, @fitness_function, chromosomes: offspring
-    end
-
-    def add_chromosome chromosome
-      @chromosomes << chromosome
-    end
-
-    private
-
-    #TODO: the chromsome length and the number of chromosomes
-    # in a population are not the same. Fix it
-    def seed_population
-      @chromosomes.map! { Chromosome.random @chromosomes.size }
     end
   end
 end
