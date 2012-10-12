@@ -45,13 +45,3 @@ module GeneticAlgorithms
     end
   end
 end
-
-fitness_function = lambda do |chromosome|  
-  score = 0
-
-  chromosome.each_char { |char| score += 1 if char == "0" }
-  score
-end
-
-p = GeneticAlgorithms::Population.new 6, fitness_function, first_generation: true
-ap p.evolve

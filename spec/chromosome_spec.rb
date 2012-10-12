@@ -56,4 +56,14 @@ describe Chromosome do
       end.should raise_error IncompatibleChromosomes
     end
   end
+
+  describe ".random" do
+    it "should return an instance of Chromosome" do
+      Chromosome.random(10).is_a?(Chromosome).should == true
+    end
+
+    it "should be the length specified" do
+      Chromosome.random(10).length.should ==  10
+    end
+  end
 end
