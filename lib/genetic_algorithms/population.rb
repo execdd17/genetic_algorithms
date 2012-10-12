@@ -30,8 +30,7 @@ module GeneticAlgorithms
           RouletteWheel.spin weighted_chromosomes
         end
 
-        #TODO: change Chromosome#crossover to Chromosome#reproduce
-        child_chromosome    = mates.first.crossover(mates.last)
+        child_chromosome    = mates.first.reproduce_with(mates.last)
         child_post_mutation = child_chromosome.map { |chromosome| chromosome.mutate }
         offspring          += child_post_mutation
       end
