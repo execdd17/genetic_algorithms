@@ -33,7 +33,7 @@ module GeneticAlgorithms
         offspring          += child_post_mutation
       end
 
-      Population.new @chromosomes.size, @fitness_function, chromosomes: offspring
+      Population.new offspring, @fitness_function
     end
   end
 end
