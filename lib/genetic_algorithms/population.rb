@@ -3,11 +3,12 @@ module GeneticAlgorithms
   #TODO: add input validation
   class Population
 
-    attr_reader :chromosomes
+    attr_reader :chromosomes, :highest_score
 
     def initialize(chromosomes, fitness_function)
       @chromosomes      = chromosomes
       @fitness_function = fitness_function
+      @highest_score    = nil
     end
 
     def self.random_chromosomes(total_chromosomes, chromosome_length)
@@ -21,6 +22,8 @@ module GeneticAlgorithms
         memo[chromosome] = @fitness_function.call(chromosome)
         memo
       end
+
+      @highest_score = weighted_chromosomes.values.max
 
       offspring = (0...(@chromosomes.size/2)).inject(Array.new) do |offspring|
         mates = Array.new(2).map do
