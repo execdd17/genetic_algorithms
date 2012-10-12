@@ -22,13 +22,15 @@ module GeneticAlgorithms
         memo
       end
 
-      offspring = (0...(@chromosomes.size/2)).inject(Array.new) do |memo, i|
+      offspring = (0...(@chromosomes.size/2)).inject(Array.new) do |offspring|
         mates = Array.new(2).map do
           RouletteWheel.spin weighted_chromosomes
         end
 
-        chromosome_recombination = mates.first.crossover(mates.last)
-        memo += chromosome_recombination.map { |chromosome| chromosome.mutate }
+        #TODO: change Chromosome#crossover to Chromosome#reproduce
+        child_chromosome    = mates.first.crossover(mates.last)
+        child_post_mutation = child_chromosome.map { |chromosome| chromosome.mutate }
+        offspring          += child_post_mutation
       end
 
       Population.new @chromosomes.size, @fitness_function, chromosomes: offspring
