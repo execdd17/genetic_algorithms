@@ -17,8 +17,8 @@ module GeneticAlgorithms
     end
 
     def evolve
-      weighted_chromosomes = @chromosomes.inject(Hash.new) do |memo, chrom|
-        memo[chrom] = @fitness_function.call(chrom)
+      weighted_chromosomes = @chromosomes.inject(Hash.new) do |memo, chromosome|
+        memo[chromosome] = @fitness_function.call(chromosome)
         memo
       end
 
