@@ -31,7 +31,7 @@ module GeneticAlgorithms
       char == ON ? OFF : ON
     end
     
-    def crossover(chromosome, probability=0.7)
+    def reproduce_with(chromosome, probability=0.7)
       unless self.size == chromosome.size
         raise IncompatibleChromosomes, "Both chromosomes need to be the same size"
       end
