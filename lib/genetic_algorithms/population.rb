@@ -30,9 +30,9 @@ module GeneticAlgorithms
           RouletteWheel.spin weighted_chromosomes
         end
 
-        child_chromosome    = mates.first.reproduce_with(mates.last)
-        child_post_mutation = child_chromosome.map { |chromosome| chromosome.mutate }
-        offspring          += child_post_mutation
+        children_chromosomes    = mates.first.crossover(mates.last)
+        children_post_mutation  = children_chromosomes.map { |chromosome| chromosome.mutate }
+        offspring              += children_post_mutation
       end
 
       Population.new offspring, @fitness_function
