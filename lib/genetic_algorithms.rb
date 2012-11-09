@@ -5,8 +5,8 @@ require 'logging'
 
 %W{Population Chromosome}.each do |logger_type|
   log = Logging.logger["GeneticAlgorithms::#{logger_type}"]
-  log.level = :info
-  log.add_appenders Logging.appenders.stdout
+  log.level = :debug
+  log.add_appenders Logging.appenders.file("results.log")
 end
 
 module GeneticAlgorithms

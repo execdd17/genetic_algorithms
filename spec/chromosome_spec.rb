@@ -25,29 +25,34 @@ describe Chromosome do
   end
 
   describe "#crossover" do
+    ROUNDS = 1000
+
     before(:each) do
       @chromosome_1 = Chromosome.new "0000"
       @chromosome_2 = Chromosome.new "1111"
     end
 
-    it "should alter the calling Chromosome's state when triggered" do
-      offspring_1, offspring_2 = @chromosome_1.crossover(@chromosome_2, 1.0)
-      offspring_1.should_not == @chromosome_1
-    end
-    
-    it "should alter the receiver's Chromosome's state when triggered" do
-      offspring_1, offspring_2 = @chromosome_1.crossover(@chromosome_2, 1.0)
-      offspring_2.should_not == @chromosome_2
-    end
-    
-    it "should not alter the receiver's Chromosome's state when not triggered" do
-      offspring_1, offspring_2 = @chromosome_1.crossover(@chromosome_2, 0.0)
-      offspring_2.should == @chromosome_2
+    it "should return a single Chromosome" do
+      @chromosome_1.crossover(@chromosome_2).is_a?(Chromosome).should == true
     end
 
-    it "should not alter the receiver's Chromosome's state when not triggered" do
-      offspring_1, offspring_2 = @chromosome_1.crossover(@chromosome_2, 0.0)
-      offspring_2.should == @chromosome_2
+    it "should return a chromosome identical to the caller over time" do
+      (0...ROUNDS).any? do |i|
+        @chromosome_1.crossover(@chromosome_2) == @chromosome_1
+      end.should == true
+    end
+
+    it "should return a chromosome identical to the receiver over time" do
+      (0...ROUNDS).any? do |i|
+        @chromosome_1.crossover(@chromosome_2) == @chromosome_2
+      end.should == true
+    end
+
+    it "should return a distinct new chromosome over time" do
+      (0...ROUNDS).any? do |i|
+        offspring = @chromosome_1.crossover(@chromosome_2)
+        offspring != @chromosome_1 and offspring != @chromosome_2
+      end.should == true
     end
 
     it "should raise an exception when trying to swap chromosomes of different sizes" do
