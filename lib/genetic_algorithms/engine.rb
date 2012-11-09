@@ -1,6 +1,5 @@
 module GeneticAlgorithms
   class Engine 
-    include FitnessFunctions::AllOffIdeal
     
     def initialize(population_size=100, chromosome_length=30, num_generations=50)
       @population_size    = population_size 
@@ -10,5 +9,26 @@ module GeneticAlgorithms
       @chromosomes = Population.random_chromosomes @population_size, @chromosome_length
       @population  = Population.new @chromosomes
     end 
+
+    # TODO: this should return the best solution discovered as well
+    # as the its score
+    def start(fitness_function_type)
+      extend GeneticAlgorithms::FitnessFunctions.const_get(fitness_function_type)
+
+      highest_score = 0
+
+      (0...@num_generations).inject(@population) do |newest_population, i|
+        next_gen = newest_population.evolve(&fitness_function)
+
+        if newest_population.highest_score > highest_score
+          highest_score = newest_population.highest_score 
+          break if highest_score == self.best_possible_score
+        end
+
+        next_gen
+      end
+
+      highest_score
+    end
   end
 end
