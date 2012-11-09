@@ -1,7 +1,7 @@
 module GeneticAlgorithms
   class Engine 
     
-    def initialize(population_size=100, chromosome_length=30, num_generations=50)
+    def initialize(population_size=10, chromosome_length=10, num_generations=5)
       @population_size    = population_size 
       @chromosome_length  = chromosome_length
       @num_generations    = num_generations

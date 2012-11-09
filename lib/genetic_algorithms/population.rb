@@ -6,7 +6,8 @@ module GeneticAlgorithms
     attr_reader :chromosomes, :highest_score, :best_solution
 
     def initialize(chromosomes)
-      @chromosomes = chromosomes
+      @chromosomes  = chromosomes
+      @logger       = Logging.logger[self.class]
     end
 
     def self.random_chromosomes(total_chromosomes, chromosome_length)
@@ -21,19 +22,21 @@ module GeneticAlgorithms
         memo
       end
 
-      highest_weighted = Hash[[ weighted_chromosomes.invert.sort.first ]].invert
+      highest_weighted = Hash[[ weighted_chromosomes.invert.sort.last ]].invert
       @best_solution = highest_weighted.keys.first
       @highest_score = highest_weighted.values.first
 
-      offspring = (0...(@chromosomes.size/2)).inject(Array.new) do |offspring|
+      offspring = (0...(@chromosomes.size)).inject(Array.new) do |offspring|
         mates = Array.new(2).map do
           RouletteWheel.spin weighted_chromosomes
         end
 
-        children_chromosomes    = mates.first.crossover(mates.last)
-        children_post_mutation  = children_chromosomes.map { |chromosome| chromosome.mutate }
-        offspring              += children_post_mutation
+        child_chromosome    = mates.first.crossover(mates.last)
+        offspring          << child_chromosome
       end
+
+      @logger.info "Highest Score in population: #@highest_score"
+      @logger.info "Best Solution in population: #@best_solution"
 
       Population.new offspring
     end

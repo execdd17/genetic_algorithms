@@ -8,6 +8,7 @@ module GeneticAlgorithms
         raise InvalidChromosome, "A chromosome can only have 0's and 1's" 
       end
 
+      @logger = Logging.logger[self.class]
       super(string)
     end
 
@@ -19,15 +20,19 @@ module GeneticAlgorithms
       Chromosome.new chromosome
     end
 
-    def mutate(prob=0.01)
+    def mutate(prob=0.05)
+      @logger.debug "MUTATION: Starting on\t#{self}"
+
       chromosome = self.each_char.map do |char|
         mutate?(prob) ? flip(char) : char
       end.join
 
+      @logger.debug "MUTATION: Result\t\t#{chromosome}"
       Chromosome.new chromosome
     end
 
     def flip(char)
+      @logger.debug "MUTATION: Triggered on #{self}" if char == ON
       char == ON ? OFF : ON
     end
     
@@ -36,16 +41,17 @@ module GeneticAlgorithms
         raise IncompatibleChromosomes, "Both chromosomes need to be the same size"
       end
 
-      first_offspring, second_offspring = self, chromosome
+      offspring = self
 
       if crossover?(probability)
-        index   = rand(0...length)
-
-        first_offspring  = Chromosome.new self[0...index] + chromosome[index...length]
-        second_offspring = Chromosome.new chromosome[0...index] + self[index...length]
+        index       = rand(0...length)
+        offspring   = Chromosome.new self[0...index] + chromosome[index...length]
+        @logger.debug "CROSSOVER: Using the first #{index} bits from #{self} and " +
+                      "the last #{length - index} bits from #{chromosome}"
+        @logger.debug "CROSSOVER: Result\t#{offspring}"
       end
 
-      [first_offspring, second_offspring]
+      offspring.mutate  
     end
     
     def check_prob(prob)

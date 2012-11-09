@@ -1,5 +1,7 @@
 source :rubygems
 
+gem "logging"
+
 group :development, :test do
   gem "rspec"
   gem "simplecov"

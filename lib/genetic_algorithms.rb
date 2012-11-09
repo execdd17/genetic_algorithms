@@ -1,5 +1,13 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))             
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib/genetic_algorithms'))
+  
+require 'logging'
+
+%W{Population Chromosome}.each do |logger_type|
+  log = Logging.logger["GeneticAlgorithms::#{logger_type}"]
+  log.level = :info
+  log.add_appenders Logging.appenders.stdout
+end
 
 module GeneticAlgorithms
   require 'genetic_algorithms/chromosome'
