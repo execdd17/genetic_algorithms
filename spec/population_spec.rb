@@ -30,20 +30,26 @@ describe Population do
     
     before(:each) do
 
-    # +1 for each zero bit (The best solution is all zeros)
-      fitness_function = lambda do |chromosome| 
+      # +1 for each zero bit (The best solution is all zeros)
+      @fitness_function = lambda do |chromosome| 
         chromosome.each_char.inject(0) do |accum, char|
           accum += 1 if char == "0"
           accum
         end
       end
 
-      @population = Population.new @chromosomes, fitness_function
+      @population = Population.new @chromosomes
       @best_score = CHROMOSOME_LENGTH
+    end
+    
+    it "should accept a block that holds the fitness function" do
+      next_gen = @population.evolve do |chromosome|
+        rand(@best_score)
+      end
     end
 
     it "should return a new population" do
-      next_gen = @population.evolve
+      next_gen = @population.evolve(&@fitness_function)
       (next_gen.is_a? Population and not next_gen.eql? @population).should == true
     end
 
@@ -51,7 +57,7 @@ describe Population do
       highest_score = 0
 
       (0...NUM_GENERATIONS).inject(@population) do |newest_population, i|
-        next_gen = newest_population.evolve
+        next_gen = newest_population.evolve(&@fitness_function)
 
         if newest_population.highest_score > highest_score
           highest_score = newest_population.highest_score 

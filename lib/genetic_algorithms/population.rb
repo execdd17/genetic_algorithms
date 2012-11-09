@@ -5,9 +5,8 @@ module GeneticAlgorithms
 
     attr_reader :chromosomes, :highest_score
 
-    def initialize(chromosomes, fitness_function)
+    def initialize(chromosomes)
       @chromosomes      = chromosomes
-      @fitness_function = fitness_function
       @highest_score    = nil
     end
 
@@ -17,9 +16,9 @@ module GeneticAlgorithms
       end
     end
 
-    def evolve
+    def evolve(&block)
       weighted_chromosomes = @chromosomes.inject(Hash.new) do |memo, chromosome|
-        memo[chromosome] = @fitness_function.call(chromosome)
+        memo[chromosome] = block.call(chromosome)
         memo
       end
 
@@ -35,7 +34,7 @@ module GeneticAlgorithms
         offspring              += children_post_mutation
       end
 
-      Population.new offspring, @fitness_function
+      Population.new offspring
     end
   end
 end
