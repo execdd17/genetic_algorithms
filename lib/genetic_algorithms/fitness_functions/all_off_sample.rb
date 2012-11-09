@@ -9,7 +9,7 @@ module GeneticAlgorithms
       def fitness_function
         lambda do |chromosome|
           chromosome.each_char.inject(0) do |accum, char|
-            accum += 1 if char == "0"
+            accum += 1 if char == Chromosome::OFF
             accum
           end
         end
