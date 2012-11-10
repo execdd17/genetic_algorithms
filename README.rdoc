@@ -6,7 +6,7 @@ This project contains my work in progress on Genetic Algorithms. The basic premi
 
 == Usage
 
-A chromosome is a solution to a problem, is represented as a bit string. It is intentionally general in order to lend itself to multiple domains. The only thing linking it to a particular problem set is the fitness function. A fitness function evaluates a chromosome, that is, the effectiveness of a proposed solution.
+A chromosome is a solution to a problem, and represented as a bit string. It is intentionally general in order to lend itself to multiple domains. The only thing linking it to a particular problem set is the fitness function. A fitness function evaluates a chromosome, that is, the effectiveness of a proposed solution.
 
 In my GeneticAlgorithms project, I use the engine to encapsulate the entire evolution process. You can quickly use it with default values like this:
 
