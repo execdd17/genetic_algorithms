@@ -3,7 +3,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib/genetic_algorithms'))
   
 require 'logging'
 
-%W{Population Chromosome}.each do |logger_type|
+%W{Population Chromosome RouletteWheel}.each do |logger_type|
   log = Logging.logger["GeneticAlgorithms::#{logger_type}"]
   log.level = :debug
   log.add_appenders Logging.appenders.file("results.log")

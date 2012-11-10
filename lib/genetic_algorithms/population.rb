@@ -26,9 +26,11 @@ module GeneticAlgorithms
       @best_solution = highest_weighted.keys.first
       @highest_score = highest_weighted.values.first
 
+      roulette_wheel = RouletteWheel.new weighted_chromosomes
+
       offspring = (0...(@chromosomes.size)).inject(Array.new) do |offspring|
         mates = Array.new(2).map do
-          RouletteWheel.spin weighted_chromosomes
+          roulette_wheel.spin
         end
 
         child_chromosome    = mates.first.crossover(mates.last)
