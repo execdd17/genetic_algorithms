@@ -1,6 +1,6 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))             
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib/genetic_algorithms'))
-  
+
 require 'logging'
 
 %W{Population Chromosome RouletteWheel}.each do |logger_type|
@@ -15,8 +15,8 @@ module GeneticAlgorithms
   require 'genetic_algorithms/roulette_wheel'
   require 'genetic_algorithms/population'
 
-
-  Dir[File.join("./lib/genetic_algorithms/fitness_functions", "**/*.rb")].each do |f|
+  ff_path = File.join(File.expand_path("..", __FILE__), "genetic_algorithms/fitness_functions")
+  Dir[File.join ff_path, "**/*.rb"].each do |f|
     require f
   end
 
