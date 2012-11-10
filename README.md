@@ -8,7 +8,7 @@ A chromosome is a solution to a problem, and represented as a bit string. It is 
 
 ## Usage
 
-In my GeneticAlgorithms project, I use the Engine class to encapsulate the entire evolution process. You can quickly use it with default values like this:
+In the GeneticAlgorithms module, the Engine class encapsulates the entire evolution process. You can quickly use it with default values like this:
 
 ```ruby
 GeneticAlgorithms::Engine.new.start "AllOffSample"
