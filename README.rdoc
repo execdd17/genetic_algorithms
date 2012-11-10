@@ -1,1 +1,5 @@
-This project contains my work on Genetic Algorithms.
+{<img src="https://codeclimate.com/badge.png" />}[https://codeclimate.com/github/execdd17/genetic_algorithms]
+
+== Description
+
+This project contains my work in progress on Genetic Algorithms. You can try it out now by using the Engine class.
