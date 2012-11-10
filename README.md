@@ -12,6 +12,7 @@ In my GeneticAlgorithms project, I use the engine to encapsulate the entire evol
 
 ```ruby
 GeneticAlgorithms::Engine.new.start "AllOffSample"
+```
 
 This will return a Hash containing the best chromosome found, and its score based on the fitness function. The argument to the start method is the name of a fitness function module. I have included a few with this project as a basic reference for creating your own.
 
