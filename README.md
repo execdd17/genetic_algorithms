@@ -13,8 +13,13 @@ In the GeneticAlgorithms module, the Engine class encapsulates the entire evolut
 ```ruby
 GeneticAlgorithms::Engine.new.start "AllOffSample"
 ```
+And you'll see something like:
 
-This will return a Hash containing the best chromosome found, and its score based on the fitness function. The argument to the start method is the name of a fitness function module. I have included a few with this project as a basic reference for creating your own. Here is an example fitness function where the best solution is where all bits are off:
+```ruby
+{"1000000000"=>9}
+```
+
+This is a Hash containing the best chromosome found, and its score based on the fitness function. The argument to the start method is the name of a fitness function module. I have included a few with this project as a basic reference for creating your own. Here is an example fitness function where the best solution is where all bits are off:
 
 ```ruby
 lambda do |chromosome|
@@ -26,3 +31,11 @@ end
 ```
 
 The engine has three optional parameters that can be utilized during construction. The population size, chromosome length, and number of generations to evolve (in that order). You'll notice that modifying these values can have a tremendous effect on the algorithm itself, and that is one of the interesting characteristics of genetic algorithms. In the future I will be opening up more parameters as well; currently many of them are tightly coupled to their respective classes.
+
+## Logging
+
+The RouletteWheel, Population, and Chromosome classes have independent loggers. Currently, they are all showing debug and above messages, and can be changed in lib/genetic_algorithms.rb. The output of the log is written in the root directory titled 'results.log'. It will display things like which chromosomes were chosen to mate, what happened in crossover and mutation, the highest score in a given population, etc. I plan to make the loggers more easily configurable in future releases.
+
+## Feedback
+
+If you have a questions, comments, or feature requests, please feel free to contact me.
