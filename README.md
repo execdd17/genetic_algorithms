@@ -34,7 +34,7 @@ The engine has three optional parameters that can be utilized during constructio
 
 ## Logging
 
-The RouletteWheel, Population, and Chromosome classes have independent loggers. Currently, they are all showing debug and above messages, and can be changed in lib/genetic_algorithms.rb. The output of the log is written in the root directory titled 'results.log'. It will display things like which chromosomes were chosen to mate, what happened in crossover and mutation, the highest score in a given population, etc. I plan to make the loggers more easily configurable in future releases.
+The RouletteWheel, Population, and Chromosome classes have independent loggers. Currently, they are all showing debug level and above messages, and can be changed in lib/genetic_algorithms.rb. The output of the log is written in the root directory titled 'results.log'. It will display things like which chromosomes were chosen to mate, what happened in crossover and mutation, the highest score in a given population, etc. I plan to make the loggers more easily configurable in future releases.
 
 ## Feedback
 
