@@ -14,11 +14,5 @@ module GeneticAlgorithms
   require 'genetic_algorithms/exceptions'
   require 'genetic_algorithms/roulette_wheel'
   require 'genetic_algorithms/population'
-
-  ff_path = File.join(File.expand_path("..", __FILE__), "genetic_algorithms/fitness_functions")
-  Dir[File.join ff_path, "**/*.rb"].each do |f|
-    require f
-  end
-
   require 'genetic_algorithms/engine'
 end

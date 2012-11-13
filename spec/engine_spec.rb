@@ -2,35 +2,55 @@ require 'spec_helper'
 include GeneticAlgorithms
 
 describe Engine do
-  subject { Engine.new }
-
+  
   # TODO: DRY out this code
   describe "#start" do
     context "AllOffSample fitness function" do
+
+      subject do 
+        Engine.new(10,10,10).start(10) do |chromosome|
+          chromosome.each_char.inject(0) do |accum, char|         
+            accum += 1 if char == Chromosome::OFF                 
+            accum                                                 
+          end
+        end
+      end                                                     
+
       it "returns a hash" do
-        subject.start("AllOffSample").is_a?(Hash).should == true
+        subject.is_a?(Hash).should == true
       end
 
       it "returns the best solution as a Chromosome" do
-        subject.start("AllOffSample").keys.first.is_a?(Chromosome).should == true
+        subject.keys.first.is_a?(Chromosome).should == true
       end
 
       it "returns the best score as a Fixnum" do
-        subject.start("AllOffSample").values.first.is_a?(Fixnum).should == true
+        subject.values.first.is_a?(Fixnum).should == true
       end
     end
 
     context "AlternatingOnOffSample fitness function" do
+
+      subject do 
+        Engine.new(10,10,10).start(10) do |chromosome|
+          (0...chromosome.length).inject(0) do |accum, index|                      
+            accum += 1 if index % 2 == 0 and chromosome[index] == Chromosome::ON   
+            accum += 1 if index % 2 == 1 and chromosome[index] == Chromosome::OFF  
+            accum                                                                  
+          end                                                                      
+        end
+      end                                                     
+
       it "returns a hash" do
-        subject.start("AlternatingOnOffSample").is_a?(Hash).should == true
+        subject.is_a?(Hash).should == true
       end
 
       it "returns the best solution as a Chromosome" do
-        subject.start("AlternatingOnOffSample").keys.first.is_a?(Chromosome).should == true
+        subject.keys.first.is_a?(Chromosome).should == true
       end
 
       it "returns the best score as a Fixnum" do
-        subject.start("AlternatingOnOffSample").values.first.is_a?(Fixnum).should == true
+        subject.values.first.is_a?(Fixnum).should == true
       end
     end
   end

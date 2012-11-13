@@ -10,9 +10,7 @@ module GeneticAlgorithms
       @population  = Population.new @chromosomes
     end 
 
-    def start(fitness_function_type)
-      extend GeneticAlgorithms::FitnessFunctions.const_get(fitness_function_type)
-
+    def start(best_possible_score, &fitness_function)
       highest_score, best_gen = 0, nil
       
       (0...@num_generations).inject(@population) do |newest_population, i|
@@ -20,7 +18,7 @@ module GeneticAlgorithms
 
         if newest_population.highest_score > highest_score
           highest_score, best_gen = newest_population.highest_score, newest_population
-          break if highest_score == self.best_possible_score
+          break if highest_score == best_possible_score
         end
 
         next_gen
