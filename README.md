@@ -85,12 +85,16 @@ include GeneticAlgorithms
 
 Engine.new(10,4).start(Knapsack::BEST_SCORE) do |chromosome|
   score = Knapsack.new(chromosome).utilization
-  score = Knapsack::BEST_SCORE - score if score > Knapsack::BEST_SCORE
+
+  if score > Knapsack::BEST_SCORE
+    score = Knapsack::BEST_SCORE - (score - Knapsack::BEST_SCORE) 
+  end
+
   score
 end
 ```
 
-Take note of the line checking whether the score is greater than the best score. It is necessary because we don't want genetic_algorithms to think that the over-utilized knapsacks are better solutions. A knapsack with too much stuff in it would otherwise have a higher score.
+Take note of the line checking whether the score is greater than the best score. It is necessary because we don't want genetic_algorithms to think that the over-utilized knapsacks are better solutions. A knapsack with too much stuff in it would otherwise have a higher score. I will be adding a feature so that the user can specify that lower return values from a fitness function are better than higher ones. The fitness function above will be cleaner once that is done. 
 
 The result of this run will be something like:
 
