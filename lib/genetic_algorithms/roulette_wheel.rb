@@ -14,11 +14,12 @@ module GeneticAlgorithms
       @normalized = normalized.sort_by { |chromosome, probability| probability }
     end
 
+    # TODO: use inject here instead of each_pair
     def spin 
-      accumulator, prng = 0, rand
+      accumulator, prn = 0, rand
 
       @normalized.each_pair do |chromosome, probability| 
-        if prng <= probability + accumulator
+        if prn <= probability + accumulator
           @logger.debug "Choosing #{chromosome} with probability #{probability}"
           return chromosome 
         end
