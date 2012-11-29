@@ -8,7 +8,7 @@ describe Engine do
     context "AllOffSample fitness function" do
 
       subject do 
-        Engine.new(10,10,10).start(10) do |chromosome|
+        Engine.new.start(10) do |chromosome|
           chromosome.each_char.inject(0) do |accum, char|         
             accum += 1 if char == Chromosome::OFF                 
             accum                                                 
@@ -32,7 +32,7 @@ describe Engine do
     context "AlternatingOnOffSample fitness function" do
 
       subject do 
-        Engine.new(10,10,10).start(10) do |chromosome|
+        Engine.new.start(10) do |chromosome|
           (0...chromosome.length).inject(0) do |accum, index|                      
             accum += 1 if index % 2 == 0 and chromosome[index] == Chromosome::ON   
             accum += 1 if index % 2 == 1 and chromosome[index] == Chromosome::OFF  

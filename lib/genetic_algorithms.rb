@@ -2,6 +2,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib/genetic_algorithms'))
 
 require 'logging'
+require 'awesome_print'
 
 %W{Population Chromosome RouletteWheel}.each do |logger_type|
   log = Logging.logger["GeneticAlgorithms::#{logger_type}"]
@@ -27,3 +28,13 @@ module GeneticAlgorithms
   require 'genetic_algorithms/population'
   require 'genetic_algorithms/engine'
 end
+
+#GeneticAlgorithms.config[:fitness_function_type] = :descending
+#GeneticAlgorithms.config[:num_generations]  = 10
+
+#GeneticAlgorithms::Engine.new.start(0) do |chromosome|        
+#  chromosome.each_char.inject(0) do |accum, char|     
+#    accum += 1 if char == GeneticAlgorithms::Chromosome::OFF             
+#    accum                                             
+#  end                                                 
+#end                                                   
