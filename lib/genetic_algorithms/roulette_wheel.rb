@@ -29,13 +29,11 @@ module GeneticAlgorithms
       normalize_helper { @chromosomes_and_scores }
     end
 
+    # remap fitness function scores
     def normalize_descending
       normalize_helper do 
-        total = @chromosomes_and_scores.values.inject(:+)
-
-        # remap fitness function scores
-        new_weights = @chromosomes_and_scores.map do |chromosome, score| 
-          [chromosome, total - score]
+        @chromosomes_and_scores.map do |chromosome, score| 
+          score == 0 ? [chromosome, score] : [chromosome, 1/score.to_f]
         end
       end
     end
