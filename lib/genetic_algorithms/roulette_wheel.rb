@@ -5,7 +5,7 @@ module GeneticAlgorithms
     def initialize chromosomes_and_scores
       @chromosomes_and_scores = NaturalHash[ chromosomes_and_scores ]
       @logger                 = Logging.logger[self]
-      @type                   = GeneticAlgorithms.config[:fitness_function_type]
+      @type                   = GeneticAlgorithms.fitness_function_type
     end
 
     def spin 

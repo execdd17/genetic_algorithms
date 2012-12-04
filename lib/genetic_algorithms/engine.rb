@@ -2,9 +2,9 @@ module GeneticAlgorithms
   class Engine 
     
     def initialize
-      @population_size    = GeneticAlgorithms.config[:population_size]
-      @chromosome_length  = GeneticAlgorithms.config[:chromosome_length]
-      @num_generations    = GeneticAlgorithms.config[:num_generations]
+      @population_size    = GeneticAlgorithms.population_size
+      @chromosome_length  = GeneticAlgorithms.chromosome_length
+      @num_generations    = GeneticAlgorithms.num_generations
 
       @chromosomes = Population.random_chromosomes @population_size, @chromosome_length
       @population  = Population.new @chromosomes

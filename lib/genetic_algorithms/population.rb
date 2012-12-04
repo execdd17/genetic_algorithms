@@ -9,13 +9,13 @@ module GeneticAlgorithms
     end
 
     def self.initial_high_score
-      fft = GeneticAlgorithms.config[:fitness_function_type]
+      fft = GeneticAlgorithms.fitness_function_type
       fft == :ascending ? -Float::INFINITY : Float::INFINITY
     end
 
     def self.compare_score(first_score, second_score)
       puts "fs #{first_score} ss #{second_score}"
-      case GeneticAlgorithms.config[:fitness_function_type]
+      case GeneticAlgorithms.fitness_function_type
       when :ascending then
         return -1 if first_score  <   second_score
         return  0 if first_score  ==  second_score
@@ -66,7 +66,7 @@ module GeneticAlgorithms
 
     def best_pair weighted_chromosomes
       score_to_chrom = weighted_chromosomes.invert.sort # lowest score first
-      fft = GeneticAlgorithms.config[:fitness_function_type]
+      fft = GeneticAlgorithms.fitness_function_type
       fft == :ascending ? (Hash[[ score_to_chrom.last ]].invert) : 
                           (Hash[[ score_to_chrom.first ]].invert)
     end

@@ -13,20 +13,19 @@ end
 module GeneticAlgorithms
   extend self
 
-  @config = {
-    population_size:        10,
-    chromosome_length:      10,
-    num_generations:        5,
-    fitness_function_type:  :ascending
-  }
-  
-  attr_accessor :config
-
   require 'genetic_algorithms/chromosome'
   require 'genetic_algorithms/exceptions'
   require 'genetic_algorithms/roulette_wheel'
   require 'genetic_algorithms/population'
   require 'genetic_algorithms/engine'
+  
+  attr_accessor :num_generations, :population_size, :fitness_function_type
+  attr_accessor :chromosome_length
+
+  def configure 
+    raise ArgumentError, "A block must be given" unless block_given?
+    yield self
+  end
 end
 
 #GeneticAlgorithms.config[:fitness_function_type] = :descending

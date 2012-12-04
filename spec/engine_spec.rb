@@ -1,5 +1,7 @@
 require 'spec_helper'
 include GeneticAlgorithms
+        
+GeneticAlgorithms.fitness_function_type = :ascending
 
 describe Engine do
   
