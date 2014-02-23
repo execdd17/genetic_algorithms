@@ -66,8 +66,8 @@ require 'genetic_algorithms'
 include GeneticAlgorithms
 
 Engine.configure do |config|
-    config.population_size = 10
-    config.chromosome_length = 4
+  config.population_size = 10
+  config.chromosome_length = 4
 end
 
 Engine.new.start(Knapsack::BEST_SCORE) do |chromosome|
