@@ -1,29 +1,28 @@
-require 'singleton'
-
 module GeneticAlgorithms
   class Engine
-    include Singleton
 
-    attr_accessor :population_size, :chromosome_length, :num_generations
+    class << self
+      attr_accessor :population_size, :chromosome_length, :num_generations
+    end
 
     def self.configure(&block)
-      return nil unless block_given?
-      block.call(self.instance)
+      block.call(self) if block_given?
+
+      Engine.population_size    = 10  unless Engine.population_size
+      Engine.chromosome_length  = 10  unless Engine.chromosome_length
+      Engine.num_generations    = 5   unless Engine.num_generations
     end
 
     def initialize
-      @population_size    ||= 10
-      @chromosome_length  ||= 10
-      @num_generations    ||= 5
-
-      @chromosomes = Population.random_chromosomes @population_size, @chromosome_length
-      @population  = Population.new @chromosomes
+      Engine.configure
+      chromosomes = Population.random_chromosomes Engine.population_size, Engine.chromosome_length
+      @population = Population.new chromosomes
     end 
 
     def start(best_possible_score, &fitness_function)
       highest_score, best_gen = 0, nil
       
-      (0...@num_generations).inject(@population) do |newest_population, i|
+      (0...Engine.num_generations).inject(@population) do |newest_population, i|
         next_gen = newest_population.evolve(&fitness_function)
 
         if newest_population.highest_score > highest_score

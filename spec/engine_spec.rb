@@ -6,24 +6,40 @@ describe Engine do
   BEST_SCORE = 10
 
   describe '.configure' do
-    before(:all) do
-      Engine.configure do |config|
-        config.population_size    = 23
-        config.chromosome_length  = 15
-        config.num_generations    = 7
+    context 'when invoked to override default values' do
+      before(:all) do
+        Engine.configure do |config|
+          config.population_size    = 23
+          config.chromosome_length  = 15
+          config.num_generations    = 7
+        end
+      end
+
+      it 'sets the population size from a config block' do
+        Engine.population_size.should be 23
+      end
+
+      it 'sets the chromosome length from a config block' do
+        Engine.chromosome_length.should be 15
+      end
+
+      it 'sets the num generations from a config block' do
+        Engine.num_generations.should be 7
       end
     end
 
-    it 'sets the population size from a config block' do
-      Engine.instance.population_size.should be 23
-    end
+    context 'when invoked to set defaults for you' do
+      it 'it gives you a non-nil population size' do
+        Engine.population_size.should_not be nil
+      end
 
-    it 'sets the chromosome length from a config block' do
-      Engine.instance.chromosome_length.should be 15
-    end
+      it 'it gives you a non-nil chromosome length' do
+        Engine.chromosome_length.should_not be nil
+      end
 
-    it 'sets the num generations from a config block' do
-      Engine.instance.num_generations.should be 7
+      it 'it gives you a non-nil num generations' do
+        Engine.num_generations.should_not be nil
+      end
     end
   end
 
@@ -45,7 +61,7 @@ describe Engine do
 
     context "AllOffSample fitness function" do
       subject do
-        Engine.instance.start(BEST_SCORE) do |chromosome|
+        Engine.new.start(BEST_SCORE) do |chromosome|
           chromosome.each_char.inject(0) do |accum, char|         
             accum += 1 if char == Chromosome::OFF                 
             accum                                                 
@@ -59,7 +75,7 @@ describe Engine do
     context "AlternatingOnOffSample fitness function" do
 
       subject do 
-        Engine.instance.start(BEST_SCORE) do |chromosome|
+        Engine.new.start(BEST_SCORE) do |chromosome|
           (0...chromosome.length).inject(0) do |accum, index|                      
             accum += 1 if index % 2 == 0 and chromosome[index] == Chromosome::ON   
             accum += 1 if index % 2 == 1 and chromosome[index] == Chromosome::OFF  
