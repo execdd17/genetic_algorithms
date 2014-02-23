@@ -1,10 +1,20 @@
+require 'singleton'
+
 module GeneticAlgorithms
-  class Engine 
-    
-    def initialize(population_size=10, chromosome_length=10, num_generations=5)
-      @population_size    = population_size 
-      @chromosome_length  = chromosome_length
-      @num_generations    = num_generations
+  class Engine
+    include Singleton
+
+    attr_accessor :population_size, :chromosome_length, :num_generations
+
+    def self.configure(&block)
+      return nil unless block_given?
+      block.call(self.instance)
+    end
+
+    def initialize
+      @population_size    ||= 10
+      @chromosome_length  ||= 10
+      @num_generations    ||= 5
 
       @chromosomes = Population.random_chromosomes @population_size, @chromosome_length
       @population  = Population.new @chromosomes
